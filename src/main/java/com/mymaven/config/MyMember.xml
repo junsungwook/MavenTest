@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper    
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!-- 쿼리를 적으면 된다 -->
+<mapper namespace="com.mymaven.config.MyMember">
+<insert id="insertMember" parameterType="mvo">
+	insert into 
+	springmember(id,name,pass,addr,memo,reg_date) 
+	values(#{id},#{name},#{pass},#{addr},#{memo},sysdate)
+</insert>
+
+
+</mapper>
+ 
