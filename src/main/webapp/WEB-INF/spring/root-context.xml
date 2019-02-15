@@ -24,9 +24,21 @@
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:/com/mymaven/config/Configuration.xml"/>
+		
+		<!-- configuration.xml에서 쿼리파일을 지정해도 되고 configuration에서 mapper로 지정해도 된다 -->
+		<property name="mapperLocations" value="classpath:/com/mymaven/config/MyMember.xml"></property>
 	</bean>
-	<bean id="sqlMapper" class="org.mybatis.spring.SqlSessionTemplate">
+	
+	
+	
+	<!-- <bean id="sqlMapper" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+	</bean> -->
+	
+	<!-- 여기서 sqlSessionFactory로 들어가서 DAO에서 openSession을 한 효과랑 동일하다  -->
+	<bean id="sqlMap" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg  name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
 	</bean>
+	
 	
 </beans>

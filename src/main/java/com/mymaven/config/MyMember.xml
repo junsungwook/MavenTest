@@ -5,11 +5,66 @@
 
  <!-- 쿼리를 적으면 된다 -->
 <mapper namespace="com.mymaven.config.MyMember">
+
+
+
+
+
+
 <insert id="insertMember" parameterType="mvo">
 	insert into 
 	springmember(id,name,pass,addr,memo,reg_date) 
 	values(#{id},#{name},#{pass},#{addr},#{memo},sysdate)
 </insert>
+
+<select id="listMember" resultType="mvo">
+ 	select *
+ 	from springmember
+</select>
+
+<select id="detail" parameterType="String" resultType="mvo">
+	select *
+	from springmember
+	where id=#{id}
+</select>
+
+<update id="update" parameterType="mvo">
+	update springmember
+ 	set name=#{name}, addr=#{addr}, memo=#{memo}, pass=#{pass}
+ 	where id=#{id}
+</update>
+<delete id="delete" parameterType="String">
+	delete from springmember
+	where id=#{id}
+</delete>
+
+<!-- <select id="select" resultType="mvo" parameterType="HashMap">
+ 	select *
+ 	from springmember
+ 	where ${field } like '%${word}%'
+</select> -->
+
+
+<select id="pageMember"  resultType="mvo" parameterType="HashMap">
+<!-- 부등호를 쿼리문 그대로 인식하기 위한 방법이다 -->
+<if test="field==null">
+select * 
+from (select rownum rn,aa.* 
+	  from (select * from springmember)aa) 
+where rn between #{startRow} and #{endRow}
+</if>
+<if test="field!=null and word !=''">
+select *
+from (
+	select * 
+	from (
+	      select rownum rn,aa.* 
+	  	  from (select * from springmember)aa
+	  	  ) 
+	where ${field } like '%${word}%'
+	)
+</if>
+</select>
 
 
 </mapper>
